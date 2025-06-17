@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет студента</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h1>Личный кабинет студента</h1>
+    {% for session, records in grouped_data.items() %}
+    <h2>Сессия: {{ session }}</h2>
+    <table border="1">
+      <tr>
+        <th class="col-course-name">Название курса</th>
+        <th class="col-grade">Оценка</th>
+        <th class="col-date">Дата сдачи</th>
+        <th class="col-type">Вид отчетности</th>
+        <th class="col-teacher">Преподаватель</th>
+    </tr>
+    {% for record in records %}
+    <tr>
+        <td class="col-course-name">{{ record.course_name }}</td>
+        <td class="col-grade">{{ record.grade }}</td>
+        <td class="col-date">{{ record.exam_date }}</td>
+        <td class="col-type">{{ record.type }}</td>
+        <td class="col-teacher">{{ record.teacher_name }}</td>
+    </tr>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+    <p><a href="/logout">Выйти</a></p>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление преподавателями</title>
+</head>
+<body>
+    <h1>Управление преподавателями</h1>
+
+    <h2>Добавить нового преподавателя</h2>
+    <form method="POST">
+        <label>ФИО:</label><br>
+        <input type="text" name="full_name" required><br><br>
+        <label>Имя пользователя:</label><br>
+        <input type="text" name="username" required><br><br>
+        <label>Пароль:</label><br>
+        <input type="password" name="password" required><br><br>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <h2>Список преподавателей</h2>
+    <table border="1">
+        <tr>
+            <th>ФИО</th>
+            <th>Имя пользователя</th>
+            <th>Действия</th>
+        </tr>
+        {% for teacher in teachers %}
+        <tr>
+            <td>{{ teacher.full_name }}</td>
+            <td>{{ teacher.username }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('main.delete_teacher', teacher_id=teacher.id) }}" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Вы уверены?')">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="/dean/dashboard">Назад</a></p>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр ведомостей</title>
+</head>
+<body>
+    <h1>Просмотр ведомостей</h1>
+
+    <form method="POST">
+        <label for="session">Выберите сессию:</label>
+        <select name="session" id="session" onchange="this.form.submit()">
+            <option value="" disabled {% if not selected_session %}selected{% endif %}>Выберите сессию</option>
+            {% for session in sessions %}
+            <option value="{{ session[0] }}" {% if session[0] == selected_session %}selected{% endif %}>
+                {{ session[0] }}
+            </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <h2>Ведомости</h2>
+    <table border="1">
+        <tr>
+            <th>Группа</th>
+            <th>Курс</th>
+            <th>Сессия</th>
+            <th>Действия</th>
+        </tr>
+        {% for record in records %}
+        <tr>
+            <td>{{ record.group_name }}</td>
+            <td>{{ record.course_name }}</td>
+            <td>{{ record.session }}</td>
+            <td>
+                <a href="{{ url_for('main.grade_students', record_id=record.id) }}">Открыть</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="/logout">Выйти</a></p>
+</body>
+</html>

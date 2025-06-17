@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление пользователями</title>
+</head>
+<body>
+    <h1>Управление студентами</h1>
+
+    <h2>Добавить нового студента</h2>
+    <form method="POST">
+        <label>ФИО:</label><br>
+        <input type="text" name="full_name" required><br><br>
+        <label>Группа:</label><br>
+        <input type="text" name="group_name" required><br><br>
+        <label>Курс:</label><br>
+        <input type="number" name="course" required><br><br>
+        <label>Номер зачетной книжки:</label><br>
+        <input type="text" name="record_book_number" required><br><br>
+        <label>Имя пользователя:</label><br>
+        <input type="text" name="username" required><br><br>
+        <label>Пароль:</label><br>
+        <input type="password" name="password" required><br><br>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <h2>Список студентов</h2>
+    <table border="1">
+        <tr>
+            <th>ФИО</th>
+            <th>Группа</th>
+            <th>Курс</th>
+            <th>Номер зачетной книжки</th>
+            <th>Действия</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.full_name }}</td>
+            <td>{{ user.group_name }}</td>
+            <td>{{ user.course }}</td>
+            <td>{{ user.record_book_number }}</td>
+            <td>
+                <a href="{{ url_for('main.edit_user', user_id=user.id) }}">Редактировать</a> |
+                <form method="POST" action="{{ url_for('main.delete_user', user_id=user.id) }}" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Вы уверены?')">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать ведомость</title>
+</head>
+<body>
+    <h1>Редактировать ведомость</h1>
+    <form method="POST">
+        <label>Группа:</label><br>
+        <input type="text" name="group_name" value="{{ record.group_name }}" required><br><br>
+        <label>Курс:</label><br>
+        <input type="text" name="course_name" value="{{ record.course_name }}" required><br><br>
+        <label>Преподаватель:</label><br>
+        <select name="teacher_id" required>
+            {% for teacher in teachers %}
+            <option value="{{ teacher.id }}" {% if teacher.id == record.teacher_id %}selected{% endif %}>
+                {{ teacher.full_name }}
+            </option>
+            {% endfor %}
+        </select><br><br>
+        <label>Сессия:</label><br>
+        <input type="text" name="session" value="{{ record.session }}" required><br><br>
+        <label>Вид:</label><br>
+        <select name="type" required>
+            <option value="зачет" {% if record.type == "зачет" %}selected{% endif %}>Зачет</option>
+            <option value="дифференцированный зачет" {% if record.type == "дифференцированный зачет" %}selected{% endif %}>Дифференцированный зачет</option>
+            <option value="экзамен" {% if record.type == "экзамен" %}selected{% endif %}>Экзамен</option>
+        </select><br><br>
+        <button type="submit">Сохранить</button>
+    </form>
+    <p><a href="{{ url_for('main.manage_records') }}">Назад</a></p>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать данные</title>
+</head>
+<body>
+    <h1>Редактировать данные студента</h1>
+    <form method="POST">
+        <label>ФИО:</label><br>
+        <input type="text" name="full_name" value="{{ user.full_name }}" required><br><br>
+        <label>Группа:</label><br>
+        <input type="text" name="group_name" value="{{ user.group_name }}" required><br><br>
+        <label>Курс:</label><br>
+        <input type="number" name="course" value="{{ user.course }}" required><br><br>
+        <label>Номер зачетной книжки:</label><br>
+        <input type="text" name="record_book_number" value="{{ user.record_book_number }}" required><br><br>
+        <button type="submit">Сохранить</button>
+    </form>
+    <p><a href="{{ url_for('main.manage_users') }}">Назад</a></p>
+</body>
+</html>

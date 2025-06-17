@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выставление оценок</title>
+</head>
+<body>
+    <h1>Выставление оценок</h1>
+    <h2>{{ record.course_name }}</h2>
+    <p>Вид отчетности: {{ record.type }}</p>
+
+    <form method="POST">
+        <table border="1">
+                <tr>
+                    <th>ФИО студента</th>
+                    <th>Оценка</th>
+                    <th>Дата сдачи</th>
+                </tr>
+                {% for student_info in students %}
+                <tr>
+                    <td>{{ student_info.student.full_name }}</td>
+                    <td>
+                        <select name="grade_{{ student_info.student.id }}">
+                            <option value="" disabled {% if not student_info.grade or not student_info.grade.grade %}selected{% endif %}>Выберите оценку</option>
+                            {% for option in options %}
+                            <option value="{{ option }}"
+                                    {% if student_info.grade and student_info.grade.grade == option %}selected{% endif %}>
+                                {{ option }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="date" name="exam_date_{{ student_info.student.id }}" value="{{ student_info.exam_date }}">
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        <br>
+        <button type="submit">Сохранить</button>
+    </form>
+    <p><a href="{{ url_for('main.teacher_dashboard') }}">Назад</a></p>
+</body>
+</html>

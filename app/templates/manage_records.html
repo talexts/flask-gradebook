@@ -1,0 +1,53 @@
+<h1>Управление ведомостями</h1>
+
+<h2>Добавить новую ведомость</h2>
+<form method="POST">
+    <label>Группа:</label><br>
+    <input type="text" name="group_name" required><br><br>
+    <label>Курс:</label><br>
+    <input type="text" name="course_name" required><br><br>
+    <label>Преподаватель:</label><br>
+    <select name="teacher_id" required>
+        <option value="" disabled selected>Выберите преподавателя</option>
+        {% for teacher in teachers %}
+        <option value="{{ teacher.id }}">{{ teacher.full_name }}</option>
+        {% endfor %}
+    </select><br><br>
+    <label>Сессия:</label><br>
+    <input type="text" name="session" placeholder="Например: Зимняя 2024-2025" required><br><br>
+    <label>Вид:</label><br>
+    <select name="type" required>
+        <option value="" disabled selected>Выберите вид</option>
+        <option value="зачет">Зачет</option>
+        <option value="дифференцированный зачет">Дифференцированный зачет</option>
+        <option value="экзамен">Экзамен</option>
+    </select><br><br>
+    <button type="submit">Добавить ведомость</button>
+</form>
+
+<h2>Список ведомостей</h2>
+<table border="1">
+    <tr>
+        <th>Группа</th>
+        <th>Курс</th>
+        <th>Сессия</th>
+        <th>Вид</th>
+        <th>Преподаватель</th>
+        <th>Действия</th>
+    </tr>
+    {% for record in records %}
+    <tr>
+        <td>{{ record.group_name }}</td>
+        <td>{{ record.course_name }}</td>
+        <td>{{ record.session }}</td>
+        <td>{{ record.type }}</td>
+        <td>{{ record.teacher.full_name }}</td>
+        <td>
+            <a href="{{ url_for('main.edit_record', record_id=record.id) }}">Редактировать</a>
+            <form method="POST" action="{{ url_for('main.delete_record', record_id=record.id) }}" style="display:inline;">
+                <button type="submit" onclick="return confirm('Вы уверены?')">Удалить</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
